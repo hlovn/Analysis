@@ -346,13 +346,13 @@ def correlation_binwidths(data, data2, bins, boot_errs=False, nboots=1000, tp1=1
     #
     return corrs, corrs_zentral, covs
 
-def rasters(clicks, bins, axeli, msz=3):
+def rasters(clicks, bins, axeli, lw=0.3):
     import numpy as np
 
     # loop trials
     for tr in range(clicks.shape[0]):
         clicktimes = bins[clicks[tr,:] > 0]
-        axeli.vlines(clicktimes, ymin=0+tr,ymax=1+tr,linewidth=0.3)
+        axeli.vlines(clicktimes, ymin=0+tr,ymax=1+tr,linewidth=lw)
         
 
     
