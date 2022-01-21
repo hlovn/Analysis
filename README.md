@@ -1,2 +1,2 @@
 # DataAnalysis
-Python libraries that I use for data analysis.
+Python functions we use for data-analysis.
