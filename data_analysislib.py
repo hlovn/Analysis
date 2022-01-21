@@ -353,9 +353,7 @@ def rasters(clicks, bins, axeli, lw=0.3):
     for tr in range(clicks.shape[0]):
         clicktimes = bins[clicks[tr,:] > 0]
         axeli.vlines(clicktimes, ymin=0+tr,ymax=1+tr,linewidth=lw)
-        
 
-    
 
 def isiCV(raster, first_tp=151, last_tp=551):
     # input is a trials x conditions x time-points array
