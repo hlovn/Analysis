@@ -1,6 +1,13 @@
 import numpy as np
 # from lmfit import Model
 
+def outlier(x,args):
+    import numpy as np
+    if (x>args[0]+3*args[1]) or (x<args[0]-3*args[1]):
+        return np.nan
+    else:
+        return x
+
 def PSTH_meanmatch(pop_mean,pop_var,first_bin,last_bin,count_bins,nboots):
     import numpy as np
     pop_mean = pop_mean[:,first_bin:last_bin+1]
