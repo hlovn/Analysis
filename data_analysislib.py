@@ -3,8 +3,7 @@ import numpy as np
 
 def outlier(x,args):
     import numpy as np
-    x[(x>args[0]+3*args[1]) | (x<args[0]-3*args[1])] = np.nan
-    return x
+    return (x>args[0]+3*args[1]) | (x<args[0]-3*args[1])
     
 
 def PSTH_meanmatch(pop_mean,pop_var,first_bin,last_bin,count_bins,nboots):
