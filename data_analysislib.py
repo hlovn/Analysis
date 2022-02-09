@@ -1,9 +1,9 @@
 import numpy as np
 # from lmfit import Model
 
-def outlier(x,median,mad):
+def outlier(x,median,mad,crit=2.5):
     import numpy as np
-    return (x>median+3*mad) | (x<median-3*mad)
+    return (x>median+crit*mad) | (x<median-crit*mad)
     
 
 def PSTH_meanmatch(pop_mean,pop_var,first_bin,last_bin,count_bins,nboots):
