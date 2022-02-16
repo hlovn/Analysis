@@ -173,7 +173,7 @@ def meanvar_PSTH(data,count_window=100,style='same',return_bootdstrs=False,nboot
             
     for i in range(data.shape[0]):
         # compute spike counts in sliding window
-        tmp[i,:] = np.convolve(data[i,:],np.ones(bin_width,),style)
+        tmp[i,:] = np.convolve(data[i,:],np.ones(count_window,),style)
             
     vari_timevector = np.var(tmp,axis=0)
     mean_timevector = np.mean(tmp, axis=0)
