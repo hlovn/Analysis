@@ -160,12 +160,12 @@ def z_score(vect):
     z_vect = (vect - np.mean(vect)) / (eps + np.std(vect))
     return z_vect
     
-def meanvar_PSTH(data,bin_width=100,style='same',return_bootdstrs=False,nboots=1000):
+def meanvar_PSTH(data,count_window=100,style='same',return_bootdstrs=False,nboots=1000):
     data = data > 0
     if style == 'valid':
-        mean_timevector = np.nan*np.ones((data.shape[1] - bin_width + 1))
-        vari_timevector = np.nan*np.ones((data.shape[1] - bin_width + 1))
-        tmp  = np.ones((data.shape[0], data.shape[1] - bin_width + 1))
+        mean_timevector = np.nan*np.ones((data.shape[1] - count_window + 1))
+        vari_timevector = np.nan*np.ones((data.shape[1] - count_window + 1))
+        tmp  = np.ones((data.shape[0], data.shape[1] - count_window + 1))
     else:
         mean_timevector = np.nan*np.ones((data.shape[1]))
         vari_timevector = np.nan*np.ones((data.shape[1]))
