@@ -5,6 +5,27 @@ def outlier(x,median,mad,crit=2.5):
     import numpy as np
     return (x>median+crit*mad) | (x<median-crit*mad)
     
+def PSTH_meanmatch_twopopulations(pop_mean1,pop_mean2,pop_var1,pop_var2,count_bins,nboots):
+    import numpy as np
+    if pop_mean1.shape[1] != pop_mean2.shape[1]:
+        raise ValueError('pop_mean1 and pop_mean2 must have the same number of time points')
+
+    fano1 = np.nan * np.ones((pop_mean1.shape[1]))
+    fano2 = np.nan * np.ones((pop_mean2.shape[1]))
+    mean1 = np.nan * np.ones((pop_mean1.shape[1]))
+    mean2 = np.nan * np.ones((pop_mean2.shape[1]))
+
+    # loop time
+    for i in range(pop_mean1.shape[1]):
+        slope1,slope2,meantmp1,meantmp2 = mean_match(pop_mean1[:,i],pop_mean2[:,i],pop_var1[:,i],pop_var2[:,i],count_bins,nboots)
+        fano1[i]  = np.mean(slope1)
+        fano2[i]  = np.mean(slope2)
+
+        mean1[i] = np.mean(meantmp1)
+        mean2[i] = np.mean(meantmp2)
+
+    return fano1, fano2, mean1, mean2
+
 
 def PSTH_meanmatch(pop_mean,pop_var,first_bin,last_bin,count_bins,nboots):
     import numpy as np
@@ -14,6 +35,7 @@ def PSTH_meanmatch(pop_mean,pop_var,first_bin,last_bin,count_bins,nboots):
     fano  = np.nan * np.ones((pop_mean.shape[1]))
     means = np.nan * np.ones((pop_mean.shape[1]))
     
+    # loop time
     for i in range(pop_mean.shape[1]-1):
         slope1,slope2,meantmp1,meantmp2 = mean_match(pop_mean[:,0],pop_mean[:,i+1],pop_var[:,0],pop_var[:,i+1],count_bins,nboots)
         fano[i]  = np.mean(slope2)
@@ -99,7 +121,8 @@ def mean_match(mean1,mean2,variance1,variance2,count_bins,nboots):
     for boot in range(nboots):
         inds2remove1 = np.empty(0)
         inds2remove2 = np.empty(0)
-        for i in np.arange(1,count_bins.shape[0]+1,1):
+        # arange uses half open interval [start,stop)
+        for i in np.arange(np.min(count_bins),np.max(count_bins)+1,1):
             n1 = np.sum(bin_mems1 == i)
             n2 = np.sum(bin_mems2 == i)
 
